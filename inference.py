@@ -64,12 +64,25 @@ def main(args):
         y_pred = volumes[p][1]
         y_true = volumes[p][2]
         for s in range(x.shape[0]):
-            image = gray2rgb(x[s, 1])  # channel 1 is for FLAIR
-            image = outline(image, y_pred[s, 0], color=[255, 0, 0])
-            image = outline(image, y_true[s, 0], color=[0, 255, 0])
+            # image = gray2rgb(x[s, 1])  # channel 1 is for FLAIR
+            image = gray2rgb(x[s, 0])
+            # image = outline(image, y_pred[s, 0], color=[255, 0, 0])
+            # image = outline(image, y_true[s, 0], color=[0, 255, 0])
             filename = "{}-{}.png".format(p, str(s).zfill(2))
-            filepath = os.path.join(args.predictions, filename)
+            filepath = os.path.join(args.predictions,'images')
+            os.makedirs(filepath, exist_ok=True)
+            filepath = os.path.join(filepath, filename)
             imsave(filepath, image)
+            filename_mask = "{}-{}_pred.png".format(p, str(s).zfill(2))
+            filepath_mask = os.path.join(args.predictions,'masks')
+            os.makedirs(filepath_mask, exist_ok=True)
+            filepath_mask = os.path.join(filepath_mask, filename_mask)
+            # print(image[0], y_pred[s,0][0])
+            mask_ = y_pred[s, 0].astype(np.uint8)
+            mask_ = mask_*255
+            # mask_ = gray2rgb(mask_)
+            print(mask_.shape, mask_[0][0])
+            imsave(filepath_mask,mask_ )
 
 
 def data_loader(args):

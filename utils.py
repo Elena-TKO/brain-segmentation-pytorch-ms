@@ -86,9 +86,14 @@ def normalize_volume(volume):
 
 def log_images(x, y_true, y_pred, channel=1):
     images = []
-    x_np = x[:, channel].cpu().numpy()
+    # x_np = x[:, channel].cpu().numpy()
+    # y_true_np = y_true[:, 0].cpu().numpy()
+    # y_pred_np = y_pred[:, 0].cpu().numpy()
+    
+    x_np = x[:, 0].cpu().numpy()
     y_true_np = y_true[:, 0].cpu().numpy()
     y_pred_np = y_pred[:, 0].cpu().numpy()
+    
     for i in range(x_np.shape[0]):
         image = gray2rgb(np.squeeze(x_np[i]))
         image = outline(image, y_pred_np[i], color=[255, 0, 0])

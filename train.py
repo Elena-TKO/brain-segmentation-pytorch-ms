@@ -139,7 +139,7 @@ def datasets(args):
         images_dir=args.images,
         subset="train",
         image_size=args.image_size,
-        transform=transforms(scale=args.aug_scale, angle=args.aug_angle, flip_prob=0.5),
+        # transform=transforms(scale=args.aug_scale, angle=args.aug_angle, flip_prob=0.5),
     )
     valid = Dataset(
         images_dir=args.images,
